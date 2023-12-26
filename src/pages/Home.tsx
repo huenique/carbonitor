@@ -1,6 +1,7 @@
-import { Box, Grid, Text, Flex, Button } from '@chakra-ui/react';
 import { JSXElementConstructor, ReactElement } from 'react';
 import { FaCamera, FaEllipsisH, FaTrash } from 'react-icons/fa';
+
+import { Box, Button, Flex, Grid, Text } from '@chakra-ui/react';
 
 export default function Home() {
   return (
@@ -107,14 +108,14 @@ export default function Home() {
   );
 }
 
-type HButtonProps = {
+interface HButtonProps {
   onClick: () => void;
   alt: string;
   text: string;
   icon?:
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>
     | undefined;
-};
+}
 
 function HMobileButton(props: HButtonProps) {
   return (

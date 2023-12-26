@@ -1,20 +1,10 @@
-import {
-  Box,
-  Flex,
-  HStack,
-  IconButton,
-  useDisclosure,
-  Stack,
-  Link,
-  Collapse,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Container,
-} from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { FaUser } from 'react-icons/fa';
+
+import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
+import {
+    Box, Collapse, Container, Flex, HStack, IconButton, Link, Menu, MenuButton, MenuItem, MenuList,
+    Stack, useDisclosure
+} from '@chakra-ui/react';
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
