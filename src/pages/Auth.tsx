@@ -14,9 +14,9 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
+import { SESSION_COOKIE_NAME } from '../config';
 import { UserConstructor, UserData } from '../db';
 import { useUser } from '../hooks/useUser';
-import { SESSION_COOKIE_NAME } from '../config';
 
 interface AuthProps {
   appName: string;
@@ -70,7 +70,7 @@ export default function Auth(props: AuthProps) {
       id: email,
       waste: [
         {
-          brand: '',
+          label: '',
           image: '',
           co2e: 0,
         },

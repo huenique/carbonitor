@@ -1,5 +1,6 @@
-import localforage from 'localforage';
 import React, { createContext, useEffect, useState } from 'react';
+
+import { getCookieSession } from '../utils/cookie';
 
 type Email = string;
 
@@ -14,16 +15,17 @@ export const UserContext = createContext<UserContextType | undefined>(
 );
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<Email | null>(null);
+  const [userId, setUser] = useState<Email | null>(null);
 
   useEffect(() => {
-    localforage.getItem('user').then((userData) => {
-      setUser(userData as Email | null);
-    });
+    const userIdFromCookie = getCookieSession();
+    console.log('User ID from cookie:', userIdFromCookie);
+
+    setUser(typeof userIdFromCookie === 'string' ? userIdFromCookie : null);
   }, []);
 
   return (
-    <UserContext.Provider value={{ userId: user, setUser }}>
+    <UserContext.Provider value={{ userId, setUser }}>
       {children}
     </UserContext.Provider>
   );

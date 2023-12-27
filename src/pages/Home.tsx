@@ -1,7 +1,8 @@
 import { JSXElementConstructor, ReactElement } from 'react';
 import { FaCamera, FaEllipsisH, FaTrash } from 'react-icons/fa';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
-import { Box, Button, Flex, Grid, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Grid, Link, Text } from '@chakra-ui/react';
 
 export default function Home() {
   return (
@@ -53,6 +54,7 @@ export default function Home() {
           alt="scan logo"
           text="Scan"
           icon={<FaCamera />}
+          path="/scan"
         />
         <HDesktopButton
           onClick={() => {
@@ -61,6 +63,7 @@ export default function Home() {
           alt="scan logo"
           text="Trash"
           icon={<FaTrash />}
+          path="/trash"
         />
         <HDesktopButton
           onClick={() => {
@@ -69,6 +72,7 @@ export default function Home() {
           alt="scan logo"
           text="More"
           icon={<FaEllipsisH />}
+          path="/more"
         />
       </Grid>
 
@@ -86,6 +90,7 @@ export default function Home() {
           alt="scan logo"
           text="Scan"
           icon={<FaCamera />}
+          path="/scan"
         />
         <HMobileButton
           onClick={() => {
@@ -94,6 +99,7 @@ export default function Home() {
           alt="scan logo"
           text="Trash"
           icon={<FaTrash />}
+          path="/trash"
         />
         <HMobileButton
           onClick={() => {
@@ -102,6 +108,7 @@ export default function Home() {
           alt="scan logo"
           text="More"
           icon={<FaEllipsisH />}
+          path="/more"
         />
       </Flex>
     </Box>
@@ -115,37 +122,42 @@ interface HButtonProps {
   icon?:
     | ReactElement<unknown, string | JSXElementConstructor<unknown>>
     | undefined;
+  path: string;
 }
 
 function HMobileButton(props: HButtonProps) {
   return (
-    <Button
-      aria-label={props.text}
-      onClick={props.onClick}
-      variant="outline"
-      colorScheme="teal"
-      size="lg"
-      leftIcon={props.icon}
-    >
-      <Text>{props.text}</Text>
-    </Button>
+    <Link as={ReactRouterLink} to={props.path}>
+      <Button
+        aria-label={props.text}
+        onClick={props.onClick}
+        variant="outline"
+        colorScheme="teal"
+        size="lg"
+        leftIcon={props.icon}
+      >
+        {props.text}
+      </Button>
+    </Link>
   );
 }
 
 function HDesktopButton(props: HButtonProps) {
   return (
-    <Button
-      aria-label={props.text}
-      onClick={props.onClick}
-      variant="outline"
-      colorScheme="teal"
-      size="lg"
-      w="full"
-      gap={4}
-      justifyContent="start"
-      leftIcon={props.icon}
-    >
-      <Text>{props.text}</Text>
-    </Button>
+    <Link as={ReactRouterLink} to={props.path}>
+      <Button
+        aria-label={props.text}
+        onClick={props.onClick}
+        variant="outline"
+        colorScheme="teal"
+        size="lg"
+        w="full"
+        gap={4}
+        justifyContent="start"
+        leftIcon={props.icon}
+      >
+        {props.text}
+      </Button>
+    </Link>
   );
 }

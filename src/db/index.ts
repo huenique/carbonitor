@@ -1,5 +1,5 @@
 type UserWaste = {
-  brand: string;
+  label: string;
   image: string;
   co2e: number;
 };

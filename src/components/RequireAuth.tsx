@@ -1,9 +1,11 @@
 import localforage from 'localforage';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { APP_NAME, DB_STORE, SESSION_COOKIE_NAME } from '../config';
-import { useUser } from '../hooks/useUser';
 import { UserConstructor } from '../db';
+import { useUser } from '../hooks/useUser';
+import { getCookieSession } from '../utils/cookie';
 
 export default function RequireAuth({
   children,
@@ -13,14 +15,6 @@ export default function RequireAuth({
   const { userId } = useUser();
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-
-  const getCookieSession = (): string | undefined => {
-    const cookieSession = document.cookie
-      .split('; ')
-      .find((row) => row.startsWith(`${SESSION_COOKIE_NAME}=`));
-
-    return cookieSession?.split('=')[1] ?? cookieSession;
-  };
 
   useEffect(() => {
     const validateUser = async () => {
@@ -50,7 +44,6 @@ export default function RequireAuth({
           navigate('/auth');
         } else {
           setIsLoading(false);
-          navigate('/');
         }
       } catch (err) {
         console.error(
