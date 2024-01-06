@@ -1,6 +1,7 @@
 import localforage from 'localforage';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FaSave } from 'react-icons/fa';
+import { useBreakpointValue } from '@chakra-ui/react';
 
 import {
   Accordion,
@@ -19,6 +20,7 @@ import {
   CardHeader,
   Container,
   Divider,
+  HStack,
   Heading,
   Highlight,
   Image,
@@ -56,6 +58,7 @@ const PLASTIC_NAMES: Record<PlasticKey, string> = {
 type PlasticKey = 'c2' | 'ns' | 'coke';
 
 export default function Scan() {
+  const isSmallScreen = useBreakpointValue({ base: true, md: false });
   const toast = useToast();
 
   const [nyckelAccessToken, setNyckelAccessToken] = useState<string>('');
@@ -210,7 +213,7 @@ export default function Scan() {
   };
 
   return (
-    <Container my={4}>
+    <Box my={4}>
       {confidenceError.hasError && imgSrc && (
         <Container my={4}>
           <Alert status="warning" flexDirection="column" gap={4}>
@@ -246,29 +249,50 @@ export default function Scan() {
           </Alert>
         </Container>
       )}
-      <Scanner
-        imgSrc={imgSrc}
-        setImgSrc={handleSetImgSrc}
-        saveImageSrc={saveImageSrc}
-        scale={1.3}
-        previewElement={
-          <Box
-            borderColor="red"
-            borderWidth={4}
-            borderRadius="lg"
-            overflow="hidden"
-          >
-            <Image src={imgSrc ?? ''} alt="Scanned plastic waste" />
-          </Box>
-        }
-      />
-      <Container>
-        <Divider my={4} />
-        {showScannedObjectInfo(scannedWasteData, scannedWasteData.co2e)}
-        <Divider my={4} />
-        {showCo2eSummary(scannedPlasticWastes, totalCo2e, saveUserData)}
-      </Container>
-    </Container>
+      {isSmallScreen ? (
+        <Container>
+          {showScanner(imgSrc, handleSetImgSrc, saveImageSrc)}
+          <Divider my={4} />
+          {showScannedObjectInfo(scannedWasteData, scannedWasteData.co2e)}
+          <Divider my={4} />
+          {showCo2eSummary(scannedPlasticWastes, totalCo2e, saveUserData)}
+        </Container>
+      ) : (
+        <HStack alignItems="flex-start">
+          {showScanner(imgSrc, handleSetImgSrc, saveImageSrc)}
+          <Container>
+            {showScannedObjectInfo(scannedWasteData, scannedWasteData.co2e)}
+            <Divider my={4} />
+            {showCo2eSummary(scannedPlasticWastes, totalCo2e, saveUserData)}
+          </Container>
+        </HStack>
+      )}
+    </Box>
+  );
+}
+
+function showScanner(
+  imgSrc: string | null,
+  setImgSrc: (imgSrc: string | null) => Promise<boolean>,
+  saveImageSrc: () => Promise<boolean>
+): JSX.Element {
+  return (
+    <Scanner
+      imgSrc={imgSrc}
+      setImgSrc={setImgSrc}
+      saveImageSrc={saveImageSrc}
+      scale={1.3}
+      previewElement={
+        <Box
+          borderColor="red"
+          borderWidth={4}
+          borderRadius="lg"
+          overflow="hidden"
+        >
+          <Image src={imgSrc ?? ''} alt="Scanned plastic waste" />
+        </Box>
+      }
+    />
   );
 }
 

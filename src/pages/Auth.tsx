@@ -103,6 +103,11 @@ export default function Auth(props: AuthProps) {
             type="email"
             placeholder="Enter your email"
             onChange={handleSetEmail}
+            onKeyDown={(e) => {
+              if (e.key.toLowerCase() === 'enter') {
+                handleLogin();
+              }
+            }}
           />
         </ModalBody>
         <ModalFooter>
