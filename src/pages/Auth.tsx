@@ -3,15 +3,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
-  Button,
-  Input,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
+    Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
+    useDisclosure
 } from '@chakra-ui/react';
 
 import { SESSION_COOKIE_NAME } from '../config';

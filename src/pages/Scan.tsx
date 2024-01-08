@@ -1,37 +1,12 @@
 import localforage from 'localforage';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FaSave } from 'react-icons/fa';
-import { useBreakpointValue } from '@chakra-ui/react';
 
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Box,
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Container,
-  Divider,
-  HStack,
-  Heading,
-  Highlight,
-  Image,
-  Stack,
-  StackDivider,
-  Stat,
-  StatHelpText,
-  StatLabel,
-  StatNumber,
-  Text,
-  useToast,
+    Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Alert,
+    AlertDescription, AlertIcon, AlertTitle, Box, Button, Card, CardBody, CardHeader, Container,
+    Divider, Heading, Highlight, HStack, Image, Stack, StackDivider, Stat, StatHelpText, StatLabel,
+    StatNumber, Text, useBreakpointValue, useToast
 } from '@chakra-ui/react';
 
 import { Scanner } from '../components/Scanner';
