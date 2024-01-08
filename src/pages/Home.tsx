@@ -134,6 +134,7 @@ function HMobileButton(props: HButtonProps) {
         variant="outline"
         colorScheme="teal"
         size="lg"
+        w="full"
         leftIcon={props.icon}
       >
         {props.text}

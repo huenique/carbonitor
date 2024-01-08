@@ -12,6 +12,7 @@ import { UserProvider } from './contexts/UserContext.tsx';
 import Auth from './pages/Auth.tsx';
 import Home from './pages/Home.tsx';
 import Scan from './pages/Scan.tsx';
+import Trash from './pages/Trash.tsx';
 
 localforage.config({
   name: APP_NAME,
@@ -32,6 +33,14 @@ const router = createBrowserRouter([
     element: (
       <RequireAuth>
         <Scan />
+      </RequireAuth>
+    ),
+  },
+  {
+    path: '/trash',
+    element: (
+      <RequireAuth>
+        <Trash />
       </RequireAuth>
     ),
   },

@@ -2,8 +2,19 @@ import { FaUser } from 'react-icons/fa';
 
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
-    Box, Collapse, Container, Flex, HStack, IconButton, Link, Menu, MenuButton, MenuItem, MenuList,
-    Stack, useDisclosure
+  Box,
+  Collapse,
+  Container,
+  Flex,
+  HStack,
+  IconButton,
+  Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Stack,
+  useDisclosure,
 } from '@chakra-ui/react';
 
 const Navbar = () => {
@@ -29,14 +40,11 @@ const Navbar = () => {
               spacing={4}
               display={{ base: 'none', md: 'flex' }}
             >
-              <Link href={'#'} color="white">
+              <Link href="/" color="white">
                 Home
               </Link>
               <Link href={'#'} color="white">
                 About
-              </Link>
-              <Link href={'#'} color="white">
-                Services
               </Link>
               <Link href={'#'} color="white">
                 Contact
@@ -62,7 +70,7 @@ const Navbar = () => {
         <Collapse in={isOpen} animateOpacity>
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
-              <Link href={'#'} color="white">
+              <Link href={'/'} color="white">
                 Home
               </Link>
               <Link href={'#'} color="white">
