@@ -62,18 +62,12 @@ export default function Home() {
         display={{ base: 'none', md: 'grid' }}
       >
         <HDesktopButton
-          onClick={() => {
-            console.log('scan');
-          }}
           alt="scan logo"
           text="Scan"
           icon={<FaCamera />}
           path="/scan"
         />
         <HDesktopButton
-          onClick={() => {
-            console.log('trash');
-          }}
           alt="scan logo"
           text="Trash"
           icon={<FaTrash />}
@@ -105,18 +99,12 @@ export default function Home() {
         display={{ base: 'grid', md: 'none' }}
       >
         <HMobileButton
-          onClick={() => {
-            console.log('scan');
-          }}
           alt="scan logo"
           text="Scan"
           icon={<FaCamera />}
           path="/scan"
         />
         <HMobileButton
-          onClick={() => {
-            console.log('trash');
-          }}
           alt="scan logo"
           text="Trash"
           icon={<FaTrash />}
@@ -127,7 +115,6 @@ export default function Home() {
             as={Button}
             leftIcon={<FaEllipsisH />}
             aria-label="More"
-            onClick={() => {}}
             variant="outline"
             colorScheme="teal"
             size="lg"
@@ -156,7 +143,6 @@ function HMenuList(): JSX.Element {
 }
 
 interface HButtonProps {
-  onClick: () => void;
   alt: string;
   text: string;
   icon?:
@@ -170,7 +156,6 @@ function HMobileButton(props: HButtonProps): JSX.Element {
     <Link as={ReactRouterLink} to={props.path}>
       <Button
         aria-label={props.text}
-        onClick={props.onClick}
         variant="outline"
         colorScheme="teal"
         size="lg"
@@ -191,7 +176,6 @@ function HDesktopButton(props: HButtonProps): JSX.Element {
     <Link as={ReactRouterLink} to={props.path}>
       <Button
         aria-label={props.text}
-        onClick={props.onClick}
         variant="outline"
         colorScheme="teal"
         size="lg"
