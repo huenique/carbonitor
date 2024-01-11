@@ -3,8 +3,15 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
-    Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
-    useDisclosure
+  Button,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
 } from '@chakra-ui/react';
 
 import { SESSION_COOKIE_NAME } from '../config';
@@ -61,13 +68,7 @@ export default function Auth(props: AuthProps) {
   const createNewUser = async () => {
     const newUserData: UserData = {
       id: email,
-      waste: [
-        {
-          label: '',
-          image: '',
-          co2e: 0,
-        },
-      ],
+      waste: [],
     };
 
     console.info('Creating new user data:', newUserData);
@@ -87,7 +88,7 @@ export default function Auth(props: AuthProps) {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleLogin}>
+    <Modal isOpen={isOpen} onClose={handleLogin} closeOnOverlayClick={false}>
       <ModalOverlay />
       <ModalContent alignSelf="center" mx={4}>
         <ModalHeader>Please enter your email to continue</ModalHeader>

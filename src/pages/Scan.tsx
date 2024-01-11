@@ -94,8 +94,6 @@ export default function Scan() {
     return true;
   };
 
-  console.log(userId);
-
   /**
    * Saves the user's data by updating the waste information.
    *

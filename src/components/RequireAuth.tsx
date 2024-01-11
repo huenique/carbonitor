@@ -35,12 +35,13 @@ export default function RequireAuth({
         );
         const storedUser = await user.readUserData(targetUser);
         if (!storedUser) {
-          console.error('User does not exist: ', userId);
+          console.error('User does not exist. Redirecting to login page.');
 
           // Erase session cookie if target user does not exist. This is to prevent the user from
           // being stuck in a loop of being redirected to the login page.
           document.cookie = `${SESSION_COOKIE_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 
+          setIsLoading(false);
           navigate('/auth');
         } else {
           setIsLoading(false);

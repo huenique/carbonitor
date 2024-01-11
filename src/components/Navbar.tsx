@@ -1,4 +1,6 @@
+import localforage from 'localforage';
 import { FaUser } from 'react-icons/fa';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
@@ -16,10 +18,41 @@ import {
   Stack,
   useDisclosure,
 } from '@chakra-ui/react';
-import { Link as ReactRouterLink } from 'react-router-dom';
+
+import { APP_NAME, DB_STORE, SESSION_COOKIE_NAME } from '../config';
+import { UserConstructor } from '../db';
+import { useUser } from '../hooks/useUser';
 
 export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
+  const { userId, setUser } = useUser();
+
+  const resetCookieSession = () => {
+    document.cookie = `${SESSION_COOKIE_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  };
+
+  const getUserInstance = () => {
+    const user = new UserConstructor(
+      localforage.createInstance({
+        name: APP_NAME,
+        storeName: DB_STORE,
+      })
+    );
+
+    return user;
+  };
+
+  const handleResetAccount = async () => {
+    const user = getUserInstance();
+    await user.deleteUserData(String(userId));
+    resetCookieSession();
+    window.location.reload();
+  };
+
+  const handleLogout = async () => {
+    setUser(null);
+    resetCookieSession();
+  };
 
   return (
     <Box bg="teal.500" px={4}>
@@ -58,11 +91,8 @@ export default function Navbar() {
                 <FaUser size={24} color="white" />
               </MenuButton>
               <MenuList>
-                <MenuItem>Download</MenuItem>
-                <MenuItem>Create a Copy</MenuItem>
-                <MenuItem>Mark as Draft</MenuItem>
-                <MenuItem>Delete</MenuItem>
-                <MenuItem>Attend a Workshop</MenuItem>
+                <MenuItem onClick={handleResetAccount}>Reset Account</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </MenuList>
             </Menu>
           </Flex>

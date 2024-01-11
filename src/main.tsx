@@ -42,9 +42,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     path="/auth"
                     element={<Auth appName={APP_NAME} dbStoreName={DB_STORE} />}
                   />
-                  <Route path="/resource" element={<div></div>} />
-                  <Route path="*" element={<NotFound />} />
                   <Route path="/variables" element={<Variables />} />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </Container>
             </RequireAuth>
