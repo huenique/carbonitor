@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FaCamera, FaPlus, FaRedo } from 'react-icons/fa';
 import Webcam from 'react-webcam';
-
 import { Box, IconButton, Spinner } from '@chakra-ui/react';
 
 const CAMERA_SCALE_FACTOR = 1;
@@ -13,54 +12,30 @@ function getWindowDimensions() {
 
 function getComputedCamSize(scale: number) {
   const { width, height } = getWindowDimensions();
-
   return {
     width: Math.floor(width / scale),
     height: Math.floor(height / scale),
   };
 }
 
-/**
- * Props for the Scanner component.
- */
 interface ScannerProps {
-  /**
-   * The image source to display.
-   */
   imgSrc: string | null;
-
-  /**
-   * A callback function that sets the image source to the provided value.
-   * @param imgSrc - The new image source.
-   */
   setImgSrc: (imgSrc: string | null) => Promise<boolean>;
-
-  /**
-   * A callback function that saves the image source to a data store or whatever.
-   */
   saveImageSrc: () => Promise<boolean>;
-
-  /**
-   * A scale to set the camera size to.
-   */
   scale?: number;
-
-  /**
-   * A custom preview element to display instead of the camera.
-   */
   previewElement?: JSX.Element;
 }
 
 export default function Scanner(props: ScannerProps) {
   const scale = props.scale || CAMERA_SCALE_FACTOR;
-  const webcamRef = useRef<Webcam>(
-    null as unknown as HTMLVideoElement & Webcam
-  );
+  const webcamRef = useRef<Webcam>(null);
   const [windowDimensions, setWindowDimensions] = useState(
     getComputedCamSize(scale)
   );
-
-  // spinner
+  const [videoConstraints, setVideoConstraints] = useState({
+    ...windowDimensions,
+    facingMode: 'environment',
+  });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -68,8 +43,22 @@ export default function Scanner(props: ScannerProps) {
       setWindowDimensions(getComputedCamSize(scale));
     }
 
+    function handleOrientationChange() {
+      // Update video constraints here based on new orientation
+      // This is an example, you may need to adjust based on actual orientation values
+      setVideoConstraints({
+        ...getComputedCamSize(scale),
+        facingMode: 'environment',
+      });
+    }
+
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener('deviceorientation', handleOrientationChange);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('deviceorientation', handleOrientationChange);
+    };
   }, [scale]);
 
   const reset = useCallback(async () => {
@@ -78,16 +67,20 @@ export default function Scanner(props: ScannerProps) {
 
   const capture = useCallback(async () => {
     setLoading(true);
+    if (!webcamRef.current) {
+      setLoading(false);
+      console.error('Webcam not initialized');
+      return;
+    }
+
     await props.setImgSrc(webcamRef.current.getScreenshot());
     setLoading(false);
   }, [props]);
 
   const renderPreview = () => {
-    // If a custom preview element is provided, use it
     if (props.previewElement) {
       return props.previewElement;
     }
-    // Otherwise, fall back to a standard image display
     return (
       <img
         src={props.imgSrc ?? ''}
@@ -98,11 +91,6 @@ export default function Scanner(props: ScannerProps) {
         }}
       />
     );
-  };
-
-  const videoConstraints = {
-    ...windowDimensions,
-    facingMode: 'environment',
   };
 
   return (
