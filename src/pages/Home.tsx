@@ -26,23 +26,21 @@ import {
 import { UserData } from '../db';
 
 export default function Home() {
-  const [totalCO2e, setTotalCO2e] = useState(0);
+  const [totalCO2e, setTotalCO2e] = useState(0.0);
 
-  const fetchCO2e = async (email: string): Promise<number> => {
+  const fetchCO2e = async (email: string) => {
     try {
       const userData: UserData | null = await localforage.getItem(email);
       if (userData) {
         const totalCO2e = userData.waste.reduce(
           (sum, waste) => sum + waste.co2e,
-          0
+          0.0
         );
 
         setTotalCO2e(totalCO2e);
       }
-      return 0;
     } catch (error) {
       console.error('Error fetching CO2e:', error);
-      return 0;
     }
   };
 
@@ -80,10 +78,10 @@ export default function Home() {
         </Heading>
         <Flex alignItems="end" justifyContent="space-between">
           <Text fontSize="xx-large" fontWeight="bold" color="green.500">
-            {totalCO2e}
+            {totalCO2e.toFixed(2)}
           </Text>
           <Text fontSize="sm" fontWeight="bold">
-            CO2e
+            kg CO2e
           </Text>
         </Flex>
       </Flex>
