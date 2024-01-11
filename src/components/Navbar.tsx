@@ -16,8 +16,9 @@ import {
   Stack,
   useDisclosure,
 } from '@chakra-ui/react';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
-const Navbar = () => {
+export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -40,13 +41,13 @@ const Navbar = () => {
               spacing={4}
               display={{ base: 'none', md: 'flex' }}
             >
-              <Link href="/" color="white">
+              <Link as={ReactRouterLink} to="/" color="white">
                 Home
               </Link>
-              <Link href={'#'} color="white">
+              <Link as={ReactRouterLink} to="#" color="white">
                 About
               </Link>
-              <Link href={'#'} color="white">
+              <Link as={ReactRouterLink} to="#" color="white">
                 Contact
               </Link>
             </HStack>
@@ -70,16 +71,13 @@ const Navbar = () => {
         <Collapse in={isOpen} animateOpacity>
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
-              <Link href={'/'} color="white">
+              <Link as={ReactRouterLink} to="/" color="white">
                 Home
               </Link>
-              <Link href={'#'} color="white">
+              <Link as={ReactRouterLink} to="#" color="white">
                 About
               </Link>
-              <Link href={'#'} color="white">
-                Services
-              </Link>
-              <Link href={'#'} color="white">
+              <Link as={ReactRouterLink} to="#" color="white">
                 Contact
               </Link>
             </Stack>
@@ -88,6 +86,4 @@ const Navbar = () => {
       </Container>
     </Box>
   );
-};
-
-export default Navbar;
+}

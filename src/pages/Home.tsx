@@ -1,8 +1,21 @@
 import { JSXElementConstructor, ReactElement } from 'react';
-import { FaCamera, FaEllipsisH, FaTrash } from 'react-icons/fa';
+import { FaCamera, FaEllipsisH, FaInfoCircle, FaTrash } from 'react-icons/fa';
+import { GrResources } from 'react-icons/gr';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
-import { Box, Button, Flex, Grid, Link, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Heading,
+  Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+} from '@chakra-ui/react';
 
 export default function Home() {
   return (
@@ -26,10 +39,11 @@ export default function Home() {
         flexDirection="column"
         border="1px"
         borderColor="gray.500"
+        shadow="lg"
       >
-        <Text fontSize="large" fontWeight="bold" mb={2}>
+        <Heading size="md" mb={2}>
           My carbon footprint
-        </Text>
+        </Heading>
         <Flex alignItems="end" justifyContent="space-between">
           <Text fontSize="xx-large" fontWeight="bold" color="green.500">
             0.0
@@ -65,15 +79,22 @@ export default function Home() {
           icon={<FaTrash />}
           path="/trash"
         />
-        <HDesktopButton
-          onClick={() => {
-            console.log('more');
-          }}
-          alt="scan logo"
-          text="More"
-          icon={<FaEllipsisH />}
-          path="/more"
-        />
+        <Menu>
+          <MenuButton
+            as={Button}
+            leftIcon={<FaEllipsisH />}
+            aria-label="More"
+            onClick={() => {}}
+            variant="outline"
+            colorScheme="teal"
+            size="lg"
+            w="full"
+            shadow="lg"
+          >
+            More
+          </MenuButton>
+          <HMenuList />
+        </Menu>
       </Grid>
 
       <Flex
@@ -101,17 +122,36 @@ export default function Home() {
           icon={<FaTrash />}
           path="/trash"
         />
-        <HMobileButton
-          onClick={() => {
-            console.log('more');
-          }}
-          alt="scan logo"
-          text="More"
-          icon={<FaEllipsisH />}
-          path="/more"
-        />
+        <Menu>
+          <MenuButton
+            as={Button}
+            leftIcon={<FaEllipsisH />}
+            aria-label="More"
+            onClick={() => {}}
+            variant="outline"
+            colorScheme="teal"
+            size="lg"
+            w="full"
+          >
+            More
+          </MenuButton>
+          <HMenuList />
+        </Menu>
       </Flex>
     </Box>
+  );
+}
+
+function HMenuList(): JSX.Element {
+  return (
+    <MenuList>
+      <Link as={ReactRouterLink} to="/info">
+        <MenuItem icon={<FaInfoCircle />}>Common Plastic Items</MenuItem>
+      </Link>
+      <Link as={ReactRouterLink} to="/variables">
+        <MenuItem icon={<GrResources />}>What is my carbon footprint?</MenuItem>
+      </Link>
+    </MenuList>
   );
 }
 
@@ -125,7 +165,7 @@ interface HButtonProps {
   path: string;
 }
 
-function HMobileButton(props: HButtonProps) {
+function HMobileButton(props: HButtonProps): JSX.Element {
   return (
     <Link as={ReactRouterLink} to={props.path}>
       <Button
@@ -136,14 +176,17 @@ function HMobileButton(props: HButtonProps) {
         size="lg"
         w="full"
         leftIcon={props.icon}
+        px="24px"
+        shadow="lg"
+        borderColor="gray.500"
       >
-        {props.text}
+        <Text w="100%">{props.text}</Text>
       </Button>
     </Link>
   );
 }
 
-function HDesktopButton(props: HButtonProps) {
+function HDesktopButton(props: HButtonProps): JSX.Element {
   return (
     <Link as={ReactRouterLink} to={props.path}>
       <Button
@@ -156,8 +199,10 @@ function HDesktopButton(props: HButtonProps) {
         gap={4}
         justifyContent="start"
         leftIcon={props.icon}
+        shadow="lg"
+        borderColor="gray.500"
       >
-        {props.text}
+        <Text w="100%">{props.text}</Text>
       </Button>
     </Link>
   );
