@@ -1,4 +1,10 @@
-import { JSXElementConstructor, ReactElement } from 'react';
+import localforage from 'localforage';
+import {
+  JSXElementConstructor,
+  ReactElement,
+  useEffect,
+  useState,
+} from 'react';
 import { FaCamera, FaEllipsisH, FaInfoCircle, FaTrash } from 'react-icons/fa';
 import { GrResources } from 'react-icons/gr';
 import { Link as ReactRouterLink } from 'react-router-dom';
@@ -17,7 +23,35 @@ import {
   Text,
 } from '@chakra-ui/react';
 
+import { UserData } from '../db';
+
 export default function Home() {
+  const [totalCO2e, setTotalCO2e] = useState(0);
+
+  const fetchCO2e = async (email: string): Promise<number> => {
+    try {
+      const userData: UserData | null = await localforage.getItem(email);
+      if (userData) {
+        const totalCO2e = userData.waste.reduce(
+          (sum, waste) => sum + waste.co2e,
+          0
+        );
+
+        setTotalCO2e(totalCO2e);
+      }
+      return 0;
+    } catch (error) {
+      console.error('Error fetching CO2e:', error);
+      return 0;
+    }
+  };
+
+  useEffect(() => {
+    const email = document.cookie.split('=')[1];
+
+    fetchCO2e(email);
+  }, []);
+
   return (
     <Box
       minH="screen"
@@ -46,7 +80,7 @@ export default function Home() {
         </Heading>
         <Flex alignItems="end" justifyContent="space-between">
           <Text fontSize="xx-large" fontWeight="bold" color="green.500">
-            0.0
+            {totalCO2e}
           </Text>
           <Text fontSize="sm" fontWeight="bold">
             CO2e
