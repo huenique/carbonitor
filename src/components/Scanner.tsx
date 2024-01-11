@@ -100,6 +100,11 @@ export default function Scanner(props: ScannerProps) {
     );
   };
 
+  const videoConstraints = {
+    ...windowDimensions,
+    facingMode: 'environment',
+  };
+
   return (
     <div
       style={{
@@ -122,7 +127,7 @@ export default function Scanner(props: ScannerProps) {
             audio={false}
             ref={webcamRef}
             forceScreenshotSourceSize={true}
-            videoConstraints={windowDimensions}
+            videoConstraints={videoConstraints}
             screenshotFormat="image/webp"
             height={windowDimensions.height}
             width={windowDimensions.width}
