@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 
 import { UserData, UserWaste } from '../db';
+import { getCookieSession } from '../utils/cookie';
 
 type AggregatedWaste = {
   label: string;
@@ -24,7 +25,7 @@ type AggregatedWaste = {
 
 export default function Trash() {
   const [aggregatedWaste, setAggregatedWaste] = useState<AggregatedWaste[]>([]);
-  const userEmail = 'test@gg.com'; // Replace with dynamic email if needed
+  const [userEmail, setUserEmail] = useState('');
 
   const aggregateWaste = (wasteArray: UserWaste[]) => {
     const wasteMap = new Map<string, AggregatedWaste>();
@@ -103,13 +104,17 @@ export default function Trash() {
       );
     }
   };
+
   useEffect(() => {
     const fetchData = async () => {
-      const userData: UserData | null = await localforage.getItem(userEmail);
+      const email = getCookieSession() ?? '';
+      const userData: UserData | null = await localforage.getItem(email);
       if (userData && userData.waste) {
         aggregateWaste(userData.waste);
+        setUserEmail(email);
       }
     };
+
     fetchData();
   }, []);
 

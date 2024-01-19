@@ -88,7 +88,7 @@ export default function Auth(props: AuthProps) {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleLogin} closeOnOverlayClick={false}>
+    <Modal isOpen={isOpen} onClose={handleLogin} closeOnOverlayClick={false} closeOnEsc={false}>
       <ModalOverlay />
       <ModalContent alignSelf="center" mx={4}>
         <ModalHeader>Please enter your email to continue</ModalHeader>
