@@ -1,5 +1,6 @@
 import localforage from 'localforage';
-import { FaUser } from 'react-icons/fa';
+import { FaCamera, FaTrash, FaUser } from 'react-icons/fa';
+import { RiLogoutBoxFill } from 'react-icons/ri';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
@@ -13,6 +14,7 @@ import {
   Link,
   Menu,
   MenuButton,
+  MenuDivider,
   MenuItem,
   MenuList,
   Stack,
@@ -91,8 +93,19 @@ export default function Navbar() {
                 <FaUser size={24} color="white" />
               </MenuButton>
               <MenuList>
-                <MenuItem onClick={handleResetAccount}>Reset Account</MenuItem>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                <MenuItem icon={<FaUser />} onClick={handleResetAccount}>
+                  Reset Account
+                </MenuItem>
+                <MenuItem icon={<RiLogoutBoxFill />} onClick={handleLogout}>
+                  Logout
+                </MenuItem>
+                <MenuDivider />
+                <Link as={ReactRouterLink} to="/trash">
+                  <MenuItem icon={<FaTrash />}>Trash</MenuItem>
+                </Link>
+                <Link as={ReactRouterLink} to="/scan">
+                  <MenuItem icon={<FaCamera />}>Scan</MenuItem>
+                </Link>
               </MenuList>
             </Menu>
           </Flex>

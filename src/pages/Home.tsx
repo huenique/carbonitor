@@ -111,7 +111,7 @@ export default function Home() {
             leftIcon={<FaEllipsisH />}
             aria-label="More"
             onClick={() => {}}
-            variant="outline"
+            variant="solid"
             colorScheme="teal"
             size="lg"
             w="full"
@@ -147,10 +147,12 @@ export default function Home() {
             as={Button}
             leftIcon={<FaEllipsisH />}
             aria-label="More"
-            variant="outline"
             colorScheme="teal"
             size="lg"
             w="full"
+            h={24}
+            fontSize="xx-large"
+            variant="solid"
           >
             More
           </MenuButton>
@@ -165,10 +167,14 @@ function HMenuList(): JSX.Element {
   return (
     <MenuList>
       <Link as={ReactRouterLink} to="/info">
-        <MenuItem icon={<FaInfoCircle />}>Common Plastic Items</MenuItem>
+        <MenuItem icon={<FaInfoCircle />} fontSize="x-large">
+          Plastic Items
+        </MenuItem>
       </Link>
       <Link as={ReactRouterLink} to="/variables">
-        <MenuItem icon={<GrResources />}>What is my carbon footprint?</MenuItem>
+        <MenuItem icon={<GrResources />} fontSize="x-large">
+          Carbon Footprint
+        </MenuItem>
       </Link>
     </MenuList>
   );
@@ -188,7 +194,7 @@ function HMobileButton(props: HButtonProps): JSX.Element {
     <Link as={ReactRouterLink} to={props.path}>
       <Button
         aria-label={props.text}
-        variant="outline"
+        variant="solid"
         colorScheme="teal"
         size="lg"
         w="full"
@@ -196,6 +202,10 @@ function HMobileButton(props: HButtonProps): JSX.Element {
         px="24px"
         shadow="lg"
         borderColor="gray.500"
+        fontSize="xx-large"
+        sx={{
+          height: 24,
+        }}
       >
         <Text w="100%">{props.text}</Text>
       </Button>
@@ -208,7 +218,7 @@ function HDesktopButton(props: HButtonProps): JSX.Element {
     <Link as={ReactRouterLink} to={props.path}>
       <Button
         aria-label={props.text}
-        variant="outline"
+        variant="solid"
         colorScheme="teal"
         size="lg"
         w="full"
