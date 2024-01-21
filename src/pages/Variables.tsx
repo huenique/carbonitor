@@ -7,6 +7,7 @@ import {
   SimpleGrid,
   Text,
   VStack,
+  Image,
 } from '@chakra-ui/react';
 import { Link as InfoLink, plasticItems } from '../db/plasticItems';
 import { FaExternalLinkAlt } from 'react-icons/fa';
@@ -32,10 +33,23 @@ const Variables = () => {
             <Heading size="md" mb={4} color="teal.600">
               {itemName.replace(/_/g, ' ').toUpperCase()}
             </Heading>
+
+            <SimpleGrid columns={{ base: 2, md: 2 }} spacing={4} mb={4}>
+              {itemInfo.images.map((image, index) => (
+                <Image
+                  key={index}
+                  src={image}
+                  alt={`${itemName} image ${index + 1}`}
+                  borderRadius="lg"
+                />
+              ))}
+            </SimpleGrid>
+
             <Text mb={4} fontSize="md">
               <b>What:</b> {itemInfo.what.desc}
             </Text>
             {renderLinks(itemInfo.what.links)}
+
             <Text mb={4}>
               <b>Environmental Effect:</b>{' '}
               {typeof itemInfo.effect === 'string'
@@ -44,12 +58,25 @@ const Variables = () => {
             </Text>
             {typeof itemInfo.effect !== 'string' &&
               renderLinks(itemInfo.effect.links)}
+
             <Text mb={4}>
               <b>Reduce My Waste:</b> {itemInfo.reduce.do}
             </Text>
             <Text mb={4}>
               <b>Alternative(s):</b> {itemInfo.reduce.alternative}
             </Text>
+
+            <SimpleGrid columns={{ base: 2, md: 2 }} spacing={4} mb={4}>
+              {itemInfo.reduce.altImgs.map((altImage, index) => (
+                <Image
+                  key={index}
+                  src={altImage}
+                  alt={`Alternative ${itemName} image ${index + 1}`}
+                  borderRadius="lg"
+                />
+              ))}
+            </SimpleGrid>
+
             <Text mb={4}>
               <b>What you can do:</b> {itemInfo.reduce.cta}
             </Text>

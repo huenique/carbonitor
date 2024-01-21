@@ -3,10 +3,35 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FaSave } from 'react-icons/fa';
 
 import {
-    Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Alert,
-    AlertDescription, AlertIcon, AlertTitle, Box, Button, Card, CardBody, CardHeader, Container,
-    Divider, Heading, Highlight, HStack, Image, Stack, StackDivider, Stat, StatHelpText, StatLabel,
-    StatNumber, Text, useBreakpointValue, useToast
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Box,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Container,
+  Divider,
+  Heading,
+  Highlight,
+  HStack,
+  Image,
+  Stack,
+  StackDivider,
+  Stat,
+  StatHelpText,
+  StatLabel,
+  StatNumber,
+  Text,
+  useBreakpointValue,
+  useToast,
 } from '@chakra-ui/react';
 
 import { Scanner } from '../components/Scanner';
@@ -55,6 +80,7 @@ export default function Scan() {
     label: '',
     image: '',
     co2e: 0,
+    dateScanned: new Date(),
   });
 
   const [confidenceError, setConfidenceError] = useState<{
@@ -152,6 +178,7 @@ export default function Scan() {
         label: '',
         image: '',
         co2e: 0,
+        dateScanned: new Date(),
       });
       return false;
     }
@@ -178,6 +205,7 @@ export default function Scan() {
       // * NOTE: Ensure that the label name is a key in PLASTIC_WEIGHT_CO2E, otherwise this will
       // * throw an error. Check your Nyckel/image classification model labels.
       co2e: scannedPlasticWasteCo2e,
+      dateScanned: new Date(),
     };
 
     setScannedWasteData(userWaste);

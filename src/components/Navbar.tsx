@@ -11,6 +11,7 @@ import {
   Flex,
   HStack,
   IconButton,
+  Image,
   Link,
   Menu,
   MenuButton,
@@ -18,6 +19,7 @@ import {
   MenuItem,
   MenuList,
   Stack,
+  Text,
   useDisclosure,
 } from '@chakra-ui/react';
 
@@ -68,7 +70,14 @@ export default function Navbar() {
             onClick={onToggle}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box fontWeight="bold" color="white">
+            <Box
+              fontWeight="bold"
+              color="white"
+              display="flex"
+              alignItems="center"
+              gap={2}
+            >
+              <Image src="/carbonitor.png" alt="Carbonitor Logo" boxSize={8} />
               Carbonitor
             </Box>
             <HStack
@@ -93,6 +102,18 @@ export default function Navbar() {
                 <FaUser size={24} color="white" />
               </MenuButton>
               <MenuList>
+                <MenuItem
+                  as={Text}
+                  isDisabled
+                  sx={{
+                    '&:hover': {
+                      cursor: 'default',
+                    },
+                  }}
+                >
+                  <Text fontWeight="bold">{userId}</Text>
+                </MenuItem>
+                <MenuDivider />
                 <MenuItem icon={<FaUser />} onClick={handleResetAccount}>
                   Reset Account
                 </MenuItem>

@@ -12,6 +12,7 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 import {
   Box,
   Button,
+  Divider,
   Flex,
   Grid,
   Heading,
@@ -27,11 +28,14 @@ import { UserData } from '../db';
 
 export default function Home() {
   const [totalCO2e, setTotalCO2e] = useState(0.0);
+  const [userData, setUserData] = useState<UserData | null>(null);
 
   const fetchCO2e = async (email: string) => {
     try {
       const userData: UserData | null = await localforage.getItem(email);
       if (userData) {
+        setUserData(userData);
+
         const totalCO2e = userData.waste.reduce(
           (sum, waste) => sum + waste.co2e,
           0.0
@@ -84,6 +88,50 @@ export default function Home() {
             kg CO2e
           </Text>
         </Flex>
+
+        <Divider my={2} />
+
+        <Heading size="md" mb={2}>
+          Scanned Today
+        </Heading>
+        <Flex alignItems="end" justifyContent="space-between">
+          <Text fontSize="xx-large" fontWeight="bold" color="green.500">
+            {userData?.waste
+              .reduce((sum, waste) => {
+                const today = new Date().setHours(0, 0, 0, 0);
+                const wasteDate = new Date(waste.dateScanned).setHours(
+                  0,
+                  0,
+                  0,
+                  0
+                );
+                if (today === wasteDate) {
+                  return sum + waste.co2e;
+                }
+                return sum;
+              }, 0)
+              .toFixed(2)}
+          </Text>
+          <Text fontSize="sm" fontWeight="bold">
+            kg CO2e
+          </Text>
+        </Flex>
+
+        <Text fontSize="sm" mt={2}>
+          Plastic Bottles Scanned Today:{' '}
+          {
+            userData?.waste.filter((waste) => {
+              const today = new Date().setHours(0, 0, 0, 0);
+              const wasteDate = new Date(waste.dateScanned).setHours(
+                0,
+                0,
+                0,
+                0
+              );
+              return today === wasteDate;
+            }).length
+          }
+        </Text>
       </Flex>
 
       <Grid
@@ -117,7 +165,7 @@ export default function Home() {
             w="full"
             shadow="lg"
           >
-            More
+            More About
           </MenuButton>
           <HMenuList />
         </Menu>
@@ -151,10 +199,10 @@ export default function Home() {
             size="lg"
             w="full"
             h={24}
-            fontSize="xx-large"
+            fontSize="x-large"
             variant="solid"
           >
-            More
+            More About
           </MenuButton>
           <HMenuList />
         </Menu>
@@ -168,12 +216,12 @@ function HMenuList(): JSX.Element {
     <MenuList>
       <Link as={ReactRouterLink} to="/info">
         <MenuItem icon={<FaInfoCircle />} fontSize="x-large">
-          Plastic Items
+          Common plastic items
         </MenuItem>
       </Link>
       <Link as={ReactRouterLink} to="/variables">
         <MenuItem icon={<GrResources />} fontSize="x-large">
-          Carbon Footprint
+          Carbon footprint
         </MenuItem>
       </Link>
     </MenuList>

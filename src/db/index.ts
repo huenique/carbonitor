@@ -2,6 +2,7 @@ type UserWaste = {
   label: string;
   image: string;
   co2e: number;
+  dateScanned: Date;
 };
 
 type UserData = {
