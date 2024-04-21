@@ -88,12 +88,6 @@ export default function Navbar() {
               <Link as={ReactRouterLink} to="/" color="white">
                 Home
               </Link>
-              <Link as={ReactRouterLink} to="#" color="white">
-                About
-              </Link>
-              <Link as={ReactRouterLink} to="#" color="white">
-                Contact
-              </Link>
             </HStack>
           </HStack>
           <Flex alignItems={'center'}>
@@ -137,12 +131,6 @@ export default function Navbar() {
             <Stack as={'nav'} spacing={4}>
               <Link as={ReactRouterLink} to="/" color="white">
                 Home
-              </Link>
-              <Link as={ReactRouterLink} to="#" color="white">
-                About
-              </Link>
-              <Link as={ReactRouterLink} to="#" color="white">
-                Contact
               </Link>
             </Stack>
           </Box>
