@@ -85,12 +85,14 @@ export default function Scanner(props: ScannerProps) {
                   aria-label="Reset"
                   onClick={reset}
                   icon={<FaRedo />}
+                  size="lg"
                 />
                 <IconButton
                   aria-label="Add"
                   onClick={props.saveImageSrc}
                   disabled={!props.imgSrc}
                   icon={<FaPlus />}
+                  size="lg"
                 />
               </>
             ) : (
@@ -98,6 +100,7 @@ export default function Scanner(props: ScannerProps) {
                 aria-label="Capture"
                 onClick={capture}
                 icon={<FaCamera />}
+                size="lg"
               />
             )}
           </>
