@@ -1,6 +1,6 @@
 import localforage from 'localforage';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { FaSave } from 'react-icons/fa';
+import { FaRedo, FaSave } from 'react-icons/fa';
 
 import {
   Accordion,
@@ -19,9 +19,11 @@ import {
   CardHeader,
   Container,
   Divider,
+  Flex,
   Heading,
   Highlight,
   HStack,
+  IconButton,
   Image,
   Stack,
   StackDivider,
@@ -213,6 +215,12 @@ export default function Scan() {
     return true;
   };
 
+  // a function for resetting the Summary
+  const resetSummary = () => {
+    setTotalCo2e(0);
+    setScannedPlasticWastes([]);
+  };
+
   return (
     <Box my={4}>
       {confidenceError.hasError && imgSrc && (
@@ -256,7 +264,12 @@ export default function Scan() {
           <Divider my={4} />
           {showScannedObjectInfo(scannedWasteData, scannedWasteData.co2e)}
           <Divider my={4} />
-          {showCo2eSummary(scannedPlasticWastes, totalCo2e, saveUserData)}
+          {showCo2eSummary(
+            scannedPlasticWastes,
+            totalCo2e,
+            saveUserData,
+            resetSummary
+          )}
         </Container>
       ) : (
         <HStack alignItems="flex-start">
@@ -264,7 +277,12 @@ export default function Scan() {
           <Container>
             {showScannedObjectInfo(scannedWasteData, scannedWasteData.co2e)}
             <Divider my={4} />
-            {showCo2eSummary(scannedPlasticWastes, totalCo2e, saveUserData)}
+            {showCo2eSummary(
+              scannedPlasticWastes,
+              totalCo2e,
+              saveUserData,
+              resetSummary
+            )}
           </Container>
         </HStack>
       )}
@@ -316,7 +334,14 @@ function showScannedObjectInfo(
           </Stat>
           <Stat>
             <StatLabel fontSize="sm">Carbon footprint</StatLabel>
-            <StatNumber> {scannedPlasticWasteCo2e} kg CO2e</StatNumber>
+            <StatNumber>
+              <Flex align="flex-end">
+                {scannedPlasticWasteCo2e}
+                <Text mx={2}>
+                  kg CO<Text as="sub">2</Text>e
+                </Text>
+              </Flex>
+            </StatNumber>
           </Stat>
         </Stack>
       </CardBody>
@@ -327,7 +352,8 @@ function showScannedObjectInfo(
 function showCo2eSummary(
   scannedPlasticWastes: Array<UserWaste>,
   totalCo2e: number,
-  saveUserData: () => Promise<void>
+  saveUserData: () => Promise<void>,
+  resetSummary: () => void
 ): JSX.Element {
   const totalCo2eByPlasticKey: Record<PlasticKey, number> =
     scannedPlasticWastes.reduce((totals, waste) => {
@@ -346,7 +372,15 @@ function showCo2eSummary(
   return (
     <Card>
       <CardHeader>
-        <Heading size="md">Summary</Heading>
+        <Flex justify="space-between" align="center">
+          <Heading size="md">Summary</Heading>
+          <IconButton
+            aria-label="Reset"
+            icon={<FaRedo />}
+            onClick={resetSummary}
+            variant="outline"
+          />
+        </Flex>
       </CardHeader>
       <CardBody>
         <Stack spacing="4">
@@ -354,32 +388,37 @@ function showCo2eSummary(
             <Accordion allowToggle>
               <AccordionItem>
                 <StatLabel mt={2} fontSize="sm">
-                  Total Carbon Footprint
+                  <Flex>Total Carbon Footprint</Flex>
                 </StatLabel>
                 <AccordionButton px={0}>
                   <Box as="span" flex="1" textAlign="left">
-                    <StatNumber>{totalCo2e} kg CO2e</StatNumber>
+                    <StatNumber>
+                      <Flex>
+                        {totalCo2e}
+                        <Text mx={2}>
+                          kg CO<Text as="sub">2</Text>e
+                        </Text>
+                      </Flex>
+                    </StatNumber>
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
                 <AccordionPanel p={2}>
-                  {Object.entries(totalCo2eByPlasticKey).map(
-                    ([plasticKey, totalCo2e]) => (
-                      <Box key={plasticKey}>
-                        <Divider mb={2} />
-                        <Box
-                          display="flex"
-                          flexDirection="row"
-                          justifyContent="space-between"
-                        >
-                          <StatHelpText fontSize="sm">
-                            {PLASTIC_NAMES[plasticKey as PlasticKey]}
-                          </StatHelpText>
-                          <StatHelpText>{totalCo2e} kg CO2e</StatHelpText>
-                        </Box>
+                  {Object.entries(totalCo2eByPlasticKey).map(([plasticKey]) => (
+                    <Box key={plasticKey}>
+                      <Divider mb={2} />
+                      <Box
+                        display="flex"
+                        flexDirection="row"
+                        justifyContent="space-between"
+                      >
+                        <StatHelpText fontSize="sm">
+                          {PLASTIC_NAMES[plasticKey as PlasticKey]}
+                        </StatHelpText>
+                        <StatHelpText>{totalCo2e}</StatHelpText>
                       </Box>
-                    )
-                  )}
+                    </Box>
+                  ))}
                 </AccordionPanel>
               </AccordionItem>
             </Accordion>

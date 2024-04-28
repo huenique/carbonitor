@@ -194,7 +194,13 @@ export default function Home() {
               </Text>
               <Flex>
                 <Text fontSize="sm" fontWeight="bold">
-                  kg CO2e
+                  <Text mx={2}>
+                    kg CO
+                    <Text as="sub" fontWeight="bold">
+                      2
+                    </Text>
+                    e
+                  </Text>
                 </Text>
               </Flex>
             </Flex>
@@ -218,7 +224,13 @@ export default function Home() {
                   .toFixed(2)}
               </Text>
               <Text fontSize="sm" fontWeight="bold">
-                kg CO2e
+                <Text mx={2}>
+                  kg CO
+                  <Text as="sub" fontWeight="bold">
+                    2
+                  </Text>
+                  e
+                </Text>
               </Text>
             </Flex>
             <Text fontSize="sm" mt={2}>

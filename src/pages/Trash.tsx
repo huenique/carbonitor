@@ -160,17 +160,23 @@ export default function Trash() {
             </CardHeader>
             <CardBody>
               <Flex justify="space-between" align="center">
-                <Text
-                  fontSize={{
-                    base: 'lg',
-                    md: '2xl',
-                  }}
-                  fontWeight="semibold"
-                  color="orange.500"
-                  mt={2}
-                >
-                  CO2e: {waste.totalCo2e.toFixed(2)}
-                </Text>
+                <Flex justify="space-between" align="center">
+                  <Text color={'gray.500'} alignSelf="flex-end" mr={4}>
+                    CO<Text as="sub">2</Text>e
+                  </Text>
+                  <Text
+                    fontSize={{
+                      base: 'lg',
+                      md: '2xl',
+                    }}
+                    fontWeight="semibold"
+                    color="orange.500"
+                    mt={2}
+                  >
+                    {waste.totalCo2e.toFixed(2)}
+                  </Text>
+                </Flex>
+
                 <HStack justifyContent="flex-end" my={4}>
                   <IconButton
                     aria-label="Decrease count"
